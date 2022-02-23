@@ -16,7 +16,7 @@ function generate_geometry_windcraft(;  # INCLUSION OPTIONS:
                                         circlepath      = true,
                                         includewing     = true,
                                         wingalpha       = 4.0,
-                                        includetail     = true,
+                                        includetail     = false,
                                         includepylons   = true,
                                         includerotors   = true,
                                         numrotors       = 8,
