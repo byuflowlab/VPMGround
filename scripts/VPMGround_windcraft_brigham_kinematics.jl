@@ -11,10 +11,10 @@
 
 function generate_maneuver_windcraft_kinematic(nrevs;
     disp_plot=false,
-    includetail=true,
-    includewing=true,
-    includecontrols=true,
-    includerotors=true,
+    includetail=false,
+    includewing=false,
+    includecontrols=false,
+    includerotors=false,
     optargs...)
 
 omegamean = pi/180 * mean(omegastar.(range(0, 1, length=361); optargs...))
