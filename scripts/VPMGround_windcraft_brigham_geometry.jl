@@ -375,7 +375,7 @@ function generate_geometry_windcraft(;  # INCLUSION OPTIONS:
         verbose=verbose, xfoil=xfoil,
         data_path=data_path,
         # plot_disc=plot_disc,
-        verbose=verbose, v_lvl=v_lvl+2))
+        v_lvl=v_lvl+2))
 
         gt.verbalize("Generating second propeller...", v_lvl, verbose)
         @time push!(props, vlm.Rotor(!props[1].CW, props[1].r,
