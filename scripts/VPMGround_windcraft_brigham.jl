@@ -39,7 +39,7 @@ function visualize_maneuver_windcraft_kinematic(; save_path=extdrive_path*"Singl
     prompt=true,
     run_name="SingleProp_Alt_100ft_maneuver",
     verbose=true, v_lvl=0,
-    paraview=true)
+    paraview=false)
 
     # Geometry parameters
     includewing     = false #true
