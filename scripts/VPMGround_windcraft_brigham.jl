@@ -145,11 +145,11 @@ function visualize_maneuver_windcraft_kinematic(; save_path=extdrive_path*"Singl
     # # Move landing pad to landing area
     # vlm.vtk.lintransform!(grounds[2], eye(3), Vcruise*telapsed*[-0.25, 0, -0.0025])
     #
-    # # Save ground
-    # for (i, ground) in enumerate(grounds)
-    #     gt.save(ground, run_name*"_Ground$i"; path=save_path)
-    #     strn *= run_name*"_Ground$i.vtk;"
-    # end
+    # Save ground
+    for (i, ground) in enumerate(grounds)
+        gt.save(ground, run_name*"_Ground$i"; path=save_path)
+        strn *= run_name*"_Ground$i.vtk;"
+    end
 
     # Call paraview
     if paraview
