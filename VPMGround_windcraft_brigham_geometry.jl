@@ -518,7 +518,7 @@ function generate_geometry_windcraft(;  # INCLUSION OPTIONS:
     # ------------ OUTPUTS------------------------------------------------
 
     #Rotate to be in correct starting pos.
-    O = zeros(3,3)
+    O = zeros(3)
     if circlepath == true
         Oaxis = [0.0 -1.0 0.0; 0.0 0.0 1.0; 1.0 0.0 0.0]
     else
