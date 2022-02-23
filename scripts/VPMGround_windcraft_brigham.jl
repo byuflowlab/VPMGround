@@ -1,5 +1,8 @@
 ###This is a copy/paste of the usefull parts of windcraft
-
+#------------ Activate Enviornment -----------------------------------------
+import Pkg 
+projectpath = joinpath(@__DIR__, "..")
+Pkg.activate(projectpath)
 # ------------ MODULES ---------------------------------------------------------
 # Load simulation engine
 import FLOWUnsteady
@@ -13,7 +16,7 @@ using PyPlot
 # ------------ GLOBAL VARIABLES ------------------------------------------------
 # Default path where to save data
 # extdrive_path = "/media/edoalvar/MyExtDrive/simulationdata7/"
-extdrive_path = "~/bostergaard/VPMGround"
+extdrive_path = projectpath;
 # extdrive_path = "temps/"
 
 
