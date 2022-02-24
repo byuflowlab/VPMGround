@@ -333,7 +333,7 @@ my_RPM_function(t) = 1.0
 RPM = (my_RPM_function,)
 angle = ()
 
-Vvehcicle(t) = zeros(3)
+Vvehicle(t) = zeros(3)
 angleofvehicle(t) = zeros(3)
 
 maneuver = uns.KinematicManeuver(angle, RPM, Vvehicle, angleofvehicle)
