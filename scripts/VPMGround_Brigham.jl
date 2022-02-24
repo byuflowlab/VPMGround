@@ -46,58 +46,38 @@ data_path = uns.def_data_path;
 
 # --- Rotors --- #
 # rotorspacing    = 2.4
-if includerotors == true
+# if includerotors == true
     toprotorxpos    = -1.4
     bottomrotorxpos = toprotorxpos #-1.35
 
     #if we have inline rotors
-    if inlinerotors == true
-        if numrotors == 1
-            n_rotors    = 1
-            rotorpos1   = [toprotorxpos; 0.0; 0.0]
-            rotorposs   = rotorpos1
-            rotorccw    = [1]
-        elseif numrotors == 2
-            n_rotors = 2
-            rotorpos1   = [toprotorxpos; 0.0; rotorspacing/2.0]
-            rotorpos2   = [toprotorxpos; 0.0; -rotorspacing/2.0]
-            rotorposs   = [rotorpos1 rotorpos2]
-            if counterrotate == true
-                rotorccw        = [1,2]
-            else
-                rotorccw        = [1,1]
-            end
-        else
-            gt.verbalize("number specified rotors: $numrotors.  4 being defined...", v_lvl, verbose)
-            n_rotors        = 4
-            rotorpos1  = [toprotorxpos; 0.5*rotorspacing; rotorspacing/2.0]
-            rotorpos2  = [toprotorxpos; 0.5*rotorspacing; -rotorspacing/2.0]
-            rotorpos3  = [toprotorxpos; -0.5*rotorspacing; rotorspacing/2.0]
-            rotorpos4  = [toprotorxpos; -0.5*rotorspacing; -rotorspacing/2.0]
-            rotorposs  = [rotorpos1 rotorpos2 rotorpos3 rotorpos4]
-            rotorccw        = [1,2,1,2]
-        end
-    #if we have offset rotors
-    else
-        n_rotors        = 8
-        toprotorxpos    = -1.4
-        bottomrotorxpos = -1.35
-        rotorspacing    = 2.4
-        # Position of rotors on main wing numbering starts on top right (lookingforward from windcraft) and reads counterclockwise
-        rotorpos1 = [toprotorxpos; 1.5*rotorspacing; rotorspacing/2.0]
-        rotorpos2 = [toprotorxpos; 0.5*rotorspacing; rotorspacing/2.0]
-        rotorpos3 = [toprotorxpos; -0.5*rotorspacing; rotorspacing/2.0]
-        rotorpos4 = [toprotorxpos; -1.5*rotorspacing; rotorspacing/2.0]
-        rotorpos5 = [bottomrotorxpos; -1.5*rotorspacing; -rotorspacing/2.0]
-        rotorpos6 = [bottomrotorxpos; -0.5*rotorspacing; -rotorspacing/2.0]
-        rotorpos7 = [bottomrotorxpos; 0.5*rotorspacing; -rotorspacing/2.0]
-        rotorpos8 = [bottomrotorxpos; 1.5*rotorspacing; -rotorspacing/2.0]
-        rotorposs = [rotorpos1 rotorpos2 rotorpos3 rotorpos4 rotorpos5 rotorpos6 rotorpos7 rotorpos8]
-        rotorccw  = [1,1,2,2,1,1,2,2]
-    end
+    # if numrotors == 1
+        n_rotors    = 1
+        rotorpos1   = [toprotorxpos; 0.0; 0.0]
+        rotorposs   = rotorpos1
+        rotorccw    = [1]
+    # elseif numrotors == 2
+    #     n_rotors = 2
+    #     rotorpos1   = [toprotorxpos; 0.0; rotorspacing/2.0]
+    #     rotorpos2   = [toprotorxpos; 0.0; -rotorspacing/2.0]
+    #     rotorposs   = [rotorpos1 rotorpos2]
+    #     if counterrotate == true
+    #         rotorccw        = [1,2]
+    #     else
+    #         rotorccw        = [1,1]
+    #     end
+    # else
+    #     gt.verbalize("number specified rotors: $numrotors.  4 being defined...", v_lvl, verbose)
+    #     n_rotors        = 4
+    #     rotorpos1  = [toprotorxpos; 0.5*rotorspacing; rotorspacing/2.0]
+    #     rotorpos2  = [toprotorxpos; 0.5*rotorspacing; -rotorspacing/2.0]
+    #     rotorpos3  = [toprotorxpos; -0.5*rotorspacing; rotorspacing/2.0]
+    #     rotorpos4  = [toprotorxpos; -0.5*rotorspacing; -rotorspacing/2.0]
+    #     rotorposs  = [rotorpos1 rotorpos2 rotorpos3 rotorpos4]
+    #     rotorccw        = [1,2,1,2]
+    # end
 
-
-end #if we want rotors
+# end #if we want rotors
 """
 angle theta output in degrees
 """
@@ -171,75 +151,75 @@ vlm_system = vlm.WingSystem()
 #System to add rotor to
 mainwingsystem = vlm.WingSystem()
 _fun_fun(X,t) = [0.0, 0.0, -1e-12]
-# vlm.set_fun(mainwingsystem, Vinf_fun)
+vlm.setVinf(mainwingsystem, Vinf_fun)
 
 #make dummy rotor in case there aren't any
 rotors = vlm.Rotor[]
 rotor_systems = ()
 
 #if we want rotors, generate them and add them to the wing system here
-if includerotors == true
-    gt.verbalize("Generating Rotors...", v_lvl, verbose)
-    # --- Generate ROTORS --- #
-    R, B = uns.read_rotor(rotor_file; data_path=data_path)[[1,3]]
-    ##more rotor definition stuff:
-    n = 200.0 #target RPS
-    Vinf = 40.0 #freestream velocity
-    vind = sqrt( Vinf^2 + (n*0.84)^2 ) #velocity at 70% blade span
-    # Simulation parameters
-    J = Vinf/(n*2.0*R)                      # Advance ratio Vinf/(nD)
-    rho = 1.225                         # (kg/m^3) air density
-    mu = 1.81e-5                        # (kg/ms) air dynamic viscosity
-    ReD07 = rho*2.0*R*0.7*vind/mu            # Diameter-based Reynolds at 70% span
-    ReD = ReD07/0.7                     # Diameter-based Reynolds
+gt.verbalize("Generating Rotors...", v_lvl, verbose)
+# --- Generate ROTORS --- #
+R, B = uns.read_rotor(rotor_file; data_path=data_path)[[1,3]]
+##more rotor definition stuff:
+n = 200.0 #target RPS
+Vinf = 40.0 #freestream velocity
+vind = sqrt( Vinf^2 + (n*0.84)^2 ) #velocity at 70% blade span
+# Simulation parameters
+J = Vinf/(n*2.0*R)                      # Advance ratio Vinf/(nD)
+rho = 1.225                         # (kg/m^3) air density
+mu = 1.81e-5                        # (kg/ms) air dynamic viscosity
+ReD07 = rho*2.0*R*0.7*vind/mu            # Diameter-based Reynolds at 70% span
+ReD = ReD07/0.7                     # Diameter-based Reynolds
 
-    # Generates base rotors (one on each rotation orientation)
-    props = vlm.Rotor[]
-    gt.verbalize("Generating first propeller...", v_lvl, verbose)
-    @time push!(props, uns.generate_rotor(rotor_file; pitch=rotorpitch,
-    n=numbladeelements, CW=true, ReD=ReD,
-    verbose=verbose, xfoil=xfoil,
-    data_path=data_path,
-    # plot_disc=plot_disc,
-    v_lvl=v_lvl+2))
+# Generates base rotors (one on each rotation orientation)
+props = vlm.Rotor[]
+gt.verbalize("Generating first propeller...", v_lvl, verbose)
+@time push!(props, uns.generate_rotor(rotor_file; pitch=rotorpitch,
+n=numbladeelements, CW=true, ReD=ReD,
+verbose=verbose, xfoil=xfoil,
+data_path=data_path,
+# plot_disc=plot_disc,
+v_lvl=v_lvl+2))
 
-    gt.verbalize("Generating second propeller...", v_lvl, verbose)
-    @time push!(props, vlm.Rotor(!props[1].CW, props[1].r,
-                            props[1].chord, props[1].theta,
-                            props[1].LE_x, props[1].LE_z,
-                            props[1].B, props[1].airfoils))
-    @time vlm.initialize(props[2], props[1].m)
+gt.verbalize("Generating second propeller...", v_lvl, verbose)
+@time push!(props, vlm.Rotor(!props[1].CW, props[1].r,
+                        props[1].chord, props[1].theta,
+                        props[1].LE_x, props[1].LE_z,
+                        props[1].B, props[1].airfoils))
+@time vlm.initialize(props[2], props[1].m)
 
-    # --- Assemble Rotors --- #
-    gt.verbalize("Adding Rotors to Main Wing...", v_lvl, verbose)
-    rotors = vlm.Rotor[]
-    for i = 1:n_rotors
-        copy_prop = props[rotorccw[i]]
-        this_prop = deepcopy(copy_prop) # Alternates rotation orientation
-        this_O = rotorposs[:,i]
-        vlm.setcoordsystem(this_prop, this_O, vehicleaxis; user=true)
-        # vlm.setVinf(this_prop, Vinf_fun)
-        # Rotates props to be tip to tip #?what does this do?
-        # vlm.rotate(this_prop, (-1)^(!CW_w) * init_ori_prop)
+# --- Assemble Rotors --- #
+gt.verbalize("Adding Rotors to Main Wing...", v_lvl, verbose)
+rotors = vlm.Rotor[]
+for i = 1:n_rotors
+    copy_prop = props[rotorccw[i]]
+    this_prop = deepcopy(copy_prop) # Alternates rotation orientation
+    this_O = rotorposs[:,i]
+    vlm.setcoordsystem(this_prop, this_O, vehicleaxis; user=true)
+    vlm.setVinf(this_prop, Vinf_fun)
+    # Rotates props to be tip to tip #?what does this do?
+    # vlm.rotate(this_prop, (-1)^(!CW_w) * init_ori_prop)
 
-        # Adds the original polars that don't get copied in deepcopy
-        this_prop.airfoils = copy_prop.airfoils
-        this_prop._polars = copy_prop._polars
-        this_prop._polarroot = copy_prop._polarroot
-        this_prop._polartip = copy_prop._polartip
+    # Adds the original polars that don't get copied in deepcopy
+    this_prop.airfoils = copy_prop.airfoils
+    this_prop._polars = copy_prop._polars
+    this_prop._polarroot = copy_prop._polarroot
+    this_prop._polartip = copy_prop._polartip
 
-        push!(rotors, this_prop)
-    end
+    push!(rotors, this_prop)
+end
 
-    for (i, rotor) in enumerate(rotors)
-        vlm.addwing(mainwingsystem, "rotor$i", rotor)
-    end
+for (i, rotor) in enumerate(rotors)
+    vlm.addwing(mainwingsystem, "rotor$i", rotor)
+end
 
-    # --- Define rotor system --- #
-    gt.verbalize("Creating Rotor System...", v_lvl, verbose)
-    # Rotors grouped by systems of the same RPM
-    rotor_systems = (rotors,)
-end #if adding rotors
+vlm.setVinf(mainwingsystem,Vinf_fun)
+
+# --- Define rotor system --- #
+gt.verbalize("Creating Rotor System...", v_lvl, verbose)
+# Rotors grouped by systems of the same RPM
+rotor_systems = (rotors,)
 
  # ------------ GEOMETRY OUTPUTS------------------------------------------------
 
@@ -261,7 +241,7 @@ end
 gt.verbalize("Completed Geometry Generation and Assembly...", v_lvl, verbose)
 
 #Add geometry to vehicle system
-# vlm.setVinf(system,Vinf_fun)
+vlm.setVinf(system,Vinf_fun)
 vehicle = uns.QVLMVehicle(   system;
 # tilting_systems = tilting_systems,
 rotor_systems   = rotor_systems,
