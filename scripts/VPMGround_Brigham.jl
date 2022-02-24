@@ -170,8 +170,8 @@ vlm_system = vlm.WingSystem()
 
 #System to add rotor to
 mainwingsystem = vlm.WingSystem()
-Vinf_fun(X,t) = [0.0, 0.0, -1e-12]
-# vlm.setVinf(mainwingsystem, Vinf_fun)
+_fun_fun(X,t) = [0.0, 0.0, -1e-12]
+# vlm.set_fun(mainwingsystem, Vinf_fun)
 
 #make dummy rotor in case there aren't any
 rotors = vlm.Rotor[]
@@ -375,7 +375,7 @@ gt.verbalize("STEPPING THROUGH MANEUVER", v_lvl, verbose)
 n_steps = 36*40;
 
 strn = uns.run_simulation(simulation,n_steps;  #10 degrees for 40 rev
-                          Vinf=Vinf,
+                          Vinf=Vinf_fun,
                           save_path = save_path,
                           run_name = run_name,
                           verbose = verbose,
@@ -417,8 +417,8 @@ end
 #                 verbose=verbose, optargs...)
 
 #     # Set up dummy values of RPM and freestream
-#     Vinf(x,t) = [1,0,0]
-    vlm.setVinf(system, Vinf)
+#     _fun(x,t) = [1,0,0]
+    vlm.set_fun(system, _fun)
 #     for rotor in rotors
 #     vlm.setRPM(rotor, 6000)
 #     end
