@@ -334,9 +334,9 @@ RPM = (my_RPM_function,)
 angle = ()
 
 Vvehcicle(t) = zeros(3)
-vehicleangle(t) = zeros(3)
+angleofvehicle(t) = zeros(3)
 
-maneuver = uns.KinematicManeuver(angle, RPM, Vvehicle, vehicleangle)
+maneuver = uns.KinematicManeuver(angle, RPM, Vvehicle, angleofvehicle)
 #angle, RPM, velocity(t), 
 
 revinit         = 0.25              # Part of revolution where to start the simulation
