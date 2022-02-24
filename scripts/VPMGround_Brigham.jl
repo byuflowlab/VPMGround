@@ -185,11 +185,7 @@ end #if adding rotors
 
 #Rotate to be in correct starting pos.
 O = zeros(3)
-if circlepath == true
-    Oaxis = [0.0 -1.0 0.0; 0.0 0.0 1.0; 1.0 0.0 0.0]
-else
-    Oaxis = [1.0 0 0; 0 1 0; 0 0 1]
-end
+Oaxis = [1.0 0 0; 0 1 0; 0 0 1]
 vlm.setcoordsystem(system, O, Oaxis)
 
 gt.verbalize("Creating Wake System...", v_lvl, verbose)
