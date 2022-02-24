@@ -1,7 +1,7 @@
 ###This is a copy/paste of the usefull parts of windcraft
 #------------ Activate Enviornment -----------------------------------------
 import Pkg 
-projectpath = joinpath(@__DIR__, "..")
+projectpath = joinpath(@__DIR__, "..") * "/"
 Pkg.activate(projectpath)
 # ------------ MODULES ---------------------------------------------------------
 # Load simulation engine
@@ -164,7 +164,7 @@ end
     Paraview visualizing the VTK geometry.
 """
 
-function visualize_geometry_windcraft(; save_path   = extdrive_path*"SingleRotor_GroundEffect_geometry00/",
+function visualize_geometry_windcraft(; save_path   = joinpath(extdrive_path, "SingleRotor_GroundEffect_geometry00/"),
                                         run_name    = "SingleProp_Alt_100ft",   #Change this based on run
                                         prompt      = true,
                                         verbose     = true,
