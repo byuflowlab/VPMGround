@@ -170,6 +170,8 @@ vlm_system = vlm.WingSystem()
 
 #System to add rotor to
 mainwingsystem = vlm.WingSystem()
+Vinf_fun(X,t) = [0.0, 0.0, -1e-12]
+vlm.setVinf(mainwingsystem, Vinf_fun)
 
 #make dummy rotor in case there aren't any
 rotors = vlm.Rotor[]
