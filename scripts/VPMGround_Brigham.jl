@@ -211,6 +211,7 @@ for i = 1:n_rotors
 end
 
 for (i, rotor) in enumerate(rotors)
+    vlm.setVinf(rotor,Vinf_fun)
     vlm.addwing(mainwingsystem, "rotor$i", rotor)
 end
 
