@@ -13,16 +13,16 @@
     Generates the geometry of M600 windcraft
 """
 function generate_geometry_windcraft(;  # INCLUSION OPTIONS:
-                                        circlepath      = true,
-                                        includewing     = true,
+                                        circlepath      = false,
+                                        includewing     = false,
                                         wingalpha       = 4.0,
                                         includetail     = false,
                                         includepylons   = false,
-                                        includerotors   = false,
+                                        includerotors   = true,
                                         numrotors       = 8,
                                         counterrotate   = true,
                                         includecontrols = false,
-                                        inlinerotors    = false,
+                                        inlinerotors    = true,
                                         # REFINEMENT OPTIONS
                                         numbladeelements= 15,
                                         latticepermeter = 1,
