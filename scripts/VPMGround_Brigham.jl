@@ -24,6 +24,8 @@ extdrive_path = projectpath;
 v_lvl = 0;
 verbose = true;
 gt.verbalize("Defining parameters: ", v_lvl, verbose)
+save_folder = "202220224"
+save_path = joinpath(projectpath,"data",save_folder)
 
 # ------------ GEOMETRIC PARAMETERS (meters) -------------------------------
 # ----- Main Wing (wing system)----- #
