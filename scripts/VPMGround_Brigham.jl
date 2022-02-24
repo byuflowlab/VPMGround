@@ -322,7 +322,7 @@ maneuver = generate_maneuver_windcraft_kinematic(nrevs)
 
 Vmean           = 2*pi*R/(nrevs*t_per_rev) # (m/s) mean velocity along a full circle
 Vref            = Vmean    #determine from paper?
-angle           = (anglevehicle(t),);
+angle           = maneuver.(anglevehicle(t),);
 # anglevehicle    = 0;
 my_angle_function(t) = zeros(3);
 anglevehcile = (my_angle_function,)
