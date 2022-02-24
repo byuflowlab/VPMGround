@@ -317,7 +317,7 @@ RPMref          = 1600;
 t_per_rev       = 60/RPMref;      #60s / rotations per minute -> s/rotation
 nrevs           = 40;
 generate_maneuver_windcraft_kinematic(nrevs)
-
+anglevehicle(t) = generate_maneuver_windcraft_kinematic.anglevehcile(t)
 Vmean           = 2*pi*R/(nrevs*t_per_rev) # (m/s) mean velocity along a full circle
 Vref            = Vmean    #determine from paper?
 angle           = (anglevehicle(t),);
