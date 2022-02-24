@@ -12,6 +12,7 @@ vlm = uns.vlm
 gt = uns.gt
 
 using PyPlot
+using Statistics
 
 # ------------ GLOBAL VARIABLES ------------------------------------------------
 # Default path where to save data
