@@ -218,7 +218,7 @@ if includerotors == true
         this_prop = deepcopy(copy_prop) # Alternates rotation orientation
         this_O = rotorposs[:,i]
         vlm.setcoordsystem(this_prop, this_O, vehicleaxis; user=true)
-
+        vlm.setVinf(this_prop, Vinf_fun)
         # Rotates props to be tip to tip #?what does this do?
         # vlm.rotate(this_prop, (-1)^(!CW_w) * init_ori_prop)
 
