@@ -209,6 +209,98 @@ wake_system     = wake_system,
 )
 
 
+function generate_maneuver_windcraft_kinematic(nrevs;
+    disp_plot=false,
+    includetail=false,
+    includewing=false,
+    includecontrols=false,
+    includerotors=false,
+    optargs...)
+
+    omegamean = pi/180 * mean(omegastar.(range(0, 1, length=361); optargs...))
+
+    ############################################################################
+    # AIRCRAFT VELOCITY
+    ############################################################################
+    """
+    Receives a nondimensional time between 0 and 1, and returns the
+    vector of velocity of the vehicle at that instant.
+    """
+    function Vvehicle(t)
+
+        theta = thetastar_periodic(t, nrevs; optargs...)*pi/180
+        omega = omegastar_periodic(t, nrevs; optargs...)*pi/180
+        scaling = omega/omegamean               # Scales velocity to a maximum value of 1
+
+        Vcomp = [0.0, cos(theta), -sin(theta)]  # Counter-clockwise rotation
+        return scaling*Vcomp
+    end
+
+    ############################################################################
+    # AIRCRAFT ANGLES
+    ############################################################################
+    """
+    Receives a nondimensional time between 0 and 1, and returns the angle
+    (in degrees) of the vehicle.
+    Returns: (angle_aircraft_x, angle_aircraft_y, angle_aircraft_z)
+    """
+    function anglevehicle(t)
+
+        angle = [0.0, 0.0, thetastar_periodic(abs(t), nrevs; optargs...)]
+
+        if t < 0.0
+        return -angle
+        else
+        return angle
+        end
+
+    end
+end
+
+
+RPMref          = 1600;
+t_per_rev       = 60/RPMref;      #60s / rotations per minute -> s/rotation
+nrevs           = 40;
+generate_maneuver_windcraft_kinematic(nrevs)
+
+Vmean           = 2*pi*R/(nrevs*t_per_rev) # (m/s) mean velocity along a full circle
+Vref            = Vmean    #determine from paper?
+angle           = (anglevehicle(t),);
+# anglevehicle    = 0;
+my_angle_function(t) = zeros(3);
+anglevehcile = (my_angle_function,)
+theta0          = 0.0
+thetan          = 360.0
+omegan          = [4.0/9.0, 20.0/27.0, 4.0/9.0]
+tn              = [0.0, 0.5, 1.0]
+ttot            = nrevs*t_per_rev
+revinit         = 0.25              # Part of revolution where to start the simulation
+# tinit           = revinit*t_per_rev
+tinit           = 0;
+angle1 = maneuver.anglevehicle(tinit/ttot)
+angle2 = maneuver.anglevehicle(tinit/ttot + 1e-12)
+Winit = pi/180 * (angle2-angle1)/(ttot*1e-12)
+Vinit = Vref*maneuver.Vvehicle(tinit/ttot)
+
+# maneuver = generate_maneuver_windcraft_kinematic(nrevs;
+#         disp_plot        = true,
+#         includetail      = false,
+#         includewing      = false,
+#         includecontrols  = false,
+#         includerotors    = true,
+#         theta0           = 0,
+#         thetan           = thetan,
+#         omegan           = omegan,
+#         tn               = tn)
+
+my_RPM_function(t) = 1.0
+RPM = (my_RPM_function,)
+angle = ()
+maneuver = uns.KinematicManeuver(angle, RPM, vehicle, anglevehicle)
+
+simulation = uns.Simulation(vehicle, maneuver, Vref, RPMref, ttot;
+    Vinit=Vinit, Winit=Winit, t=tinit)
+
 # Visualize maneuver
 gt.verbalize("STEPPING THROUGH MANEUVER", v_lvl, verbose)
 
