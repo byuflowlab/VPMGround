@@ -316,6 +316,8 @@ end
 RPMref          = 1600;
 t_per_rev       = 60/RPMref;      #60s / rotations per minute -> s/rotation
 nrevs           = 40;
+ttot            = nrevs*t_per_rev
+t = 0:t_per_rev:ttot
 generate_maneuver_windcraft_kinematic(nrevs)
 anglevehicle(t) = generate_maneuver_windcraft_kinematic.anglevehcile(t)
 Vmean           = 2*pi*R/(nrevs*t_per_rev) # (m/s) mean velocity along a full circle
@@ -328,7 +330,7 @@ theta0          = 0.0
 thetan          = 360.0
 omegan          = [4.0/9.0, 20.0/27.0, 4.0/9.0]
 tn              = [0.0, 0.5, 1.0]
-ttot            = nrevs*t_per_rev
+
 revinit         = 0.25              # Part of revolution where to start the simulation
 # tinit           = revinit*t_per_rev
 tinit           = 0;
