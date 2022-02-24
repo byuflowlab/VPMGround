@@ -330,6 +330,11 @@ thetan          = 360.0
 omegan          = [4.0/9.0, 20.0/27.0, 4.0/9.0]
 tn              = [0.0, 0.5, 1.0]
 
+my_RPM_function(t) = 1.0
+RPM = (my_RPM_function,)
+angle = ()
+maneuver = uns.KinematicManeuver(angle, RPM, vehicle, anglevehicle)
+
 revinit         = 0.25              # Part of revolution where to start the simulation
 # tinit           = revinit*t_per_rev
 tinit           = 0;
@@ -349,10 +354,7 @@ Vinit = Vref*maneuver.Vvehicle(tinit/ttot)
 #         omegan           = omegan,
 #         tn               = tn)
 
-my_RPM_function(t) = 1.0
-RPM = (my_RPM_function,)
-angle = ()
-maneuver = uns.KinematicManeuver(angle, RPM, vehicle, anglevehicle)
+
 
 simulation = uns.Simulation(vehicle, maneuver, Vref, RPMref, ttot;
     Vinit=Vinit, Winit=Winit, t=tinit)
