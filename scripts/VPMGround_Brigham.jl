@@ -372,8 +372,7 @@ gt.verbalize("STEPPING THROUGH MANEUVER", v_lvl, verbose)
 strn = uns.run_simulation(simulation,n_steps = 36*40;  #10 degrees for 40 rev
                           save_path = save_path,
                           run_name = run_name,
-                          verbose = verbose,
-                          optargs ...)  
+                          verbose = verbose)
                           #this instead of below, find necessary parameters
 # strn = uns.visualize_kinematics(simulation, nsteps, save_path;
 #                                 run_name=run_name,
