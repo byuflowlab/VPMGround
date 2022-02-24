@@ -20,6 +20,7 @@ extdrive_path = projectpath;
 # extdrive_path = "temps/"
 
 #Print What's Happening as we go
+v_lvl = 0;
 gt.verbalize("Defining parameters: ", v_lvl, verbose)
 
 # ------------ GEOMETRIC PARAMETERS (meters) -------------------------------
