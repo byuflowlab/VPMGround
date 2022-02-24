@@ -216,6 +216,7 @@ for (i, rotor) in enumerate(rotors)
     vlm.addwing(mainwingsystem, "rotor$i", rotor)
 end
 
+rotors[1]._wingsystem.Vinf = Vinf_fun
 println("Sherlock!\n\trotors[1]._wingsystem.Vinf = $(rotors[1]._wingsystem.Vinf)")
 
 vlm.setVinf(mainwingsystem,Vinf_fun)
