@@ -110,6 +110,9 @@ gt.verbalize("Initializing VLM System...", v_lvl, verbose)
 # System to solve through the VLM solver
 vlm_system = vlm.WingSystem()
 
+#System to add rotor to
+mainwingsystem = vlm.WingSystem()
+
 #make dummy rotor in case there aren't any
 rotors = vlm.Rotor[]
 rotor_systems = ()
