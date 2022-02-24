@@ -38,6 +38,7 @@ rotor_file = "DJI-II.csv";  #same as single rotor case.
 
 rotorpitch       = 22;      #degrees
 numbladeelements = 15 #todo how many?  #Check this in paper
+data_path = uns.def_data_path;
 
 # --- Rotors --- #
 # rotorspacing    = 2.4
