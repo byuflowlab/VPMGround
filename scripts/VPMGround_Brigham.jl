@@ -324,8 +324,6 @@ Vref            = Vmean    #determine from paper?
 angle = 0;
 # angle           = (anglevehicle(t),); #It either hates this or above, 321
 # anglevehicle    = 0;
-my_angle_function(t) = zeros(3);
-vehicleangle = (my_angle_function,)
 theta0          = 0.0
 thetan          = 360.0
 omegan          = [4.0/9.0, 20.0/27.0, 4.0/9.0]
@@ -334,7 +332,12 @@ tn              = [0.0, 0.5, 1.0]
 my_RPM_function(t) = 1.0
 RPM = (my_RPM_function,)
 angle = ()
-maneuver = uns.KinematicManeuver(angle, RPM, vehicle, vehicleangle)
+
+Vvehcicle(t) = zeros(3)
+vehicleangle(t) = zeros(3)
+
+maneuver = uns.KinematicManeuver(angle, RPM, Vvehicle, vehicleangle)
+#angle, RPM, velocity(t), 
 
 revinit         = 0.25              # Part of revolution where to start the simulation
 # tinit           = revinit*t_per_rev
