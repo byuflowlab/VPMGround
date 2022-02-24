@@ -525,7 +525,6 @@ function generate_geometry_windcraft(;  # INCLUSION OPTIONS:
         Oaxis = [1.0 0.0 0.0; 0.0 1.0 0.0; 0.0 0.0 1.0]
     end
     Oaxis = convert(Vector{Float64}, Oaxis)
-    # vlm.setcoordsystem(system, O, Oaxis)
     vlm.setcoordsystem(system, O, Oaxis)
 
     # Tilting systems
