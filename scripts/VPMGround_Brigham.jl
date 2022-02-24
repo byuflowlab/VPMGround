@@ -366,7 +366,7 @@ simulation = uns.Simulation(vehicle, maneuver, Vref, RPMref, ttot;
 # Visualize maneuver
 gt.verbalize("STEPPING THROUGH MANEUVER", v_lvl, verbose)
 
-strn = uns.run_simulation(sim::Simulation,n_steps = 36*40;  #10 degrees for 40 rev
+strn = uns.run_simulation(simulation,n_steps = 36*40;  #10 degrees for 40 rev
                           save_path = save_path,
                           run_name = run_name,
                           verbose = verbose,
