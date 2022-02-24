@@ -94,6 +94,60 @@ if includerotors == true
 
 
 end #if we want rotors
+"""
+angle theta output in degrees
+"""
+function thetastar(tstar; theta0=0.0, thetan=360.0, omegan=[4.0/9.0;20.0/27.0;4.0/9.0], tn=[0.0;0.5;1.0])
+    #find index of max tn less than tstar and set to index variable m.
+    if tstar==tn[end]
+        m = length(tn)
+    elseif tstar==tn[1]
+        m = 1
+    else
+        m = maximum(find(x->x<tstar,tn))
+    end
+    # m = searchsortednearest(tn,tstar)
+    #loop from 1 to m and sum areas.
+    areas = 0.0
+    den = 0.0
+    for i = 2:length(tn)
+        if i <= m
+            areas += (tn[i]-tn[i-1])*(omegan[i]+omegan[i-1])/2.0
+        end
+        den += (tn[i]-tn[i-1])*(omegan[i]+omegan[i-1])/2.0
+    end
+
+    #add integral of final partial area up to tstar
+    if m < length(tn) #if we haven't already integrated over everything
+        integral = ( tstar - tn[m] ) * ( omegan[m] + (omegan[m+1]-omegan[m])/2.0 * (tstar-tn[m])/(tn[m+1]-tn[m]) )
+    else
+        integral = 0.0
+    end
+
+    #solve for scale factor, which
+    sf = thetan / den
+    #add theta0 (constant from integration)
+    theta = sf * (areas + integral) + theta0
+
+    return theta
+end
+
+function omegastar(tstar; h=1e-8, optargs...)
+    return (thetastar(tstar+h; optargs...) - thetastar(tstar; optargs...))/h
+end
+
+"""
+Transform time of thetastar and make it periodic to extend the angle output
+outside the range [0, 360]
+"""
+function thetastar_periodic(t, nrevs; optargs...)
+    tstar = (t*nrevs)%1    # Convert general time to time of one revolution
+    return 360*floor(t*nrevs) + thetastar(tstar; optargs...)
+end
+
+function omegastar_periodic(tstar, nrevs; h=1e-8, optargs...)
+    return (thetastar_periodic(tstar+h, nrevs; optargs...) - thetastar_periodic(tstar, nrevs; optargs...))/h
+end
 
 ############################################################################
 # ASSEMBLY: This block actually builds the geometry using the above parameters
@@ -356,57 +410,3 @@ end
 #         run(`paraview --data="$save_path/$strn"`)
 #     end
 
-"""
-angle theta output in degrees
-"""
-function thetastar(tstar; theta0=0.0, thetan=360.0, omegan=[4.0/9.0;20.0/27.0;4.0/9.0], tn=[0.0;0.5;1.0])
-    #find index of max tn less than tstar and set to index variable m.
-    if tstar==tn[end]
-        m = length(tn)
-    elseif tstar==tn[1]
-        m = 1
-    else
-        m = maximum(find(x->x<tstar,tn))
-    end
-    # m = searchsortednearest(tn,tstar)
-    #loop from 1 to m and sum areas.
-    areas = 0.0
-    den = 0.0
-    for i = 2:length(tn)
-        if i <= m
-            areas += (tn[i]-tn[i-1])*(omegan[i]+omegan[i-1])/2.0
-        end
-        den += (tn[i]-tn[i-1])*(omegan[i]+omegan[i-1])/2.0
-    end
-
-    #add integral of final partial area up to tstar
-    if m < length(tn) #if we haven't already integrated over everything
-        integral = ( tstar - tn[m] ) * ( omegan[m] + (omegan[m+1]-omegan[m])/2.0 * (tstar-tn[m])/(tn[m+1]-tn[m]) )
-    else
-        integral = 0.0
-    end
-
-    #solve for scale factor, which
-    sf = thetan / den
-    #add theta0 (constant from integration)
-    theta = sf * (areas + integral) + theta0
-
-    return theta
-end
-
-function omegastar(tstar; h=1e-8, optargs...)
-    return (thetastar(tstar+h; optargs...) - thetastar(tstar; optargs...))/h
-end
-
-"""
-Transform time of thetastar and make it periodic to extend the angle output
-outside the range [0, 360]
-"""
-function thetastar_periodic(t, nrevs; optargs...)
-    tstar = (t*nrevs)%1    # Convert general time to time of one revolution
-    return 360*floor(t*nrevs) + thetastar(tstar; optargs...)
-end
-
-function omegastar_periodic(tstar, nrevs; h=1e-8, optargs...)
-    return (thetastar_periodic(tstar+h, nrevs; optargs...) - thetastar_periodic(tstar, nrevs; optargs...))/h
-end
