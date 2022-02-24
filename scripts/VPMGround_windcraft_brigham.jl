@@ -139,7 +139,7 @@ function visualize_maneuver_windcraft_kinematic(; save_path=extdrive_path*"Singl
                                     run_name=run_name,
                                     save_vtk_optsargs=save_vtk_optsargs,
                                     prompt=prompt, verbose=verbose, v_lvl=v_lvl,
-                                    paraview=true
+                                    paraview=false
     )
 
     # # Move landing pad to landing area
@@ -169,7 +169,7 @@ function visualize_geometry_windcraft(; save_path   = extdrive_path*"SingleRotor
                                         prompt      = true,
                                         verbose     = true,
                                         v_lvl       = 0,
-                                        paraview    = true,
+                                        paraview    = false,
                                         xfoil       = false,
                                         optargs...)
 
