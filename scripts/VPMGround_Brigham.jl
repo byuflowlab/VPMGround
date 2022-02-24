@@ -374,7 +374,12 @@ n_steps = 36*40;
 strn = uns.run_simulation(simulation,n_steps;  #10 degrees for 40 rev
                           save_path = save_path,
                           run_name = run_name,
-                          verbose = verbose)
+                          verbose = verbose,
+                          sigma_vlm_surf=R/numbladeelements*1.3,
+                          sigma_rotor_surf=R/numbladeelements*1.3,
+                          sigmafactor_vpm=1.3,
+                          sigmafactor_vpmonvlm=1.0
+                          )
                           #this instead of below, find necessary parameters
 # strn = uns.visualize_kinematics(simulation, nsteps, save_path;
 #                                 run_name=run_name,
