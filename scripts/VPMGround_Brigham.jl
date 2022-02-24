@@ -171,7 +171,7 @@ vlm_system = vlm.WingSystem()
 #System to add rotor to
 mainwingsystem = vlm.WingSystem()
 Vinf_fun(X,t) = [0.0, 0.0, -1e-12]
-vlm.setVinf(mainwingsystem, Vinf_fun)
+# vlm.setVinf(mainwingsystem, Vinf_fun)
 
 #make dummy rotor in case there aren't any
 rotors = vlm.Rotor[]
@@ -218,7 +218,7 @@ if includerotors == true
         this_prop = deepcopy(copy_prop) # Alternates rotation orientation
         this_O = rotorposs[:,i]
         vlm.setcoordsystem(this_prop, this_O, vehicleaxis; user=true)
-        vlm.setVinf(this_prop, Vinf_fun)
+        # vlm.setVinf(this_prop, Vinf_fun)
         # Rotates props to be tip to tip #?what does this do?
         # vlm.rotate(this_prop, (-1)^(!CW_w) * init_ori_prop)
 
@@ -261,7 +261,7 @@ end
 gt.verbalize("Completed Geometry Generation and Assembly...", v_lvl, verbose)
 
 #Add geometry to vehicle system
-vlm.setVinf(system,Vinf_fun)
+# vlm.setVinf(system,Vinf_fun)
 vehicle = uns.QVLMVehicle(   system;
 # tilting_systems = tilting_systems,
 rotor_systems   = rotor_systems,
@@ -375,6 +375,7 @@ gt.verbalize("STEPPING THROUGH MANEUVER", v_lvl, verbose)
 n_steps = 36*40;
 
 strn = uns.run_simulation(simulation,n_steps;  #10 degrees for 40 rev
+                          Vinf=Vinf,
                           save_path = save_path,
                           run_name = run_name,
                           verbose = verbose,
@@ -417,7 +418,7 @@ end
 
 #     # Set up dummy values of RPM and freestream
 #     Vinf(x,t) = [1,0,0]
-#     vlm.setVinf(system, Vinf)
+    vlm.setVinf(system, Vinf)
 #     for rotor in rotors
 #     vlm.setRPM(rotor, 6000)
 #     end
