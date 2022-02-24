@@ -104,7 +104,7 @@ function thetastar(tstar; theta0=0.0, thetan=360.0, omegan=[4.0/9.0;20.0/27.0;4.
     elseif tstar==tn[1]
         m = 1
     else
-        m = maximum(find(x->x<tstar,tn))
+        m = maximum(findall(x->x<tstar,tn))
     end
     # m = searchsortednearest(tn,tstar)
     #loop from 1 to m and sum areas.
