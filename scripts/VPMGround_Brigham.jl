@@ -375,6 +375,7 @@ strn = uns.run_simulation(simulation,n_steps;  #10 degrees for 40 rev
                           save_path = save_path,
                           run_name = run_name,
                           verbose = verbose,
+                          sigma_vlm_solver=-1,
                           sigma_vlm_surf=R/numbladeelements*1.3,
                           sigma_rotor_surf=R/numbladeelements*1.3,
                           sigmafactor_vpm=1.3,
