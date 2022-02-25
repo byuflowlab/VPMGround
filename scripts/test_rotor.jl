@@ -165,7 +165,7 @@ end
 
 
 
-xfoil       = true             # Whether to run XFOIL
+xfoil       = false             # Whether to run XFOIL
                         VehicleType = uns.VLMVehicle   # Vehicle type
                         J           = 0.0              # Advance ratio
                         DVinf       = [1.0, 0, 0]      # Freestream direction
