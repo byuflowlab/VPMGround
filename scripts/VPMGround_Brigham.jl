@@ -151,7 +151,7 @@ vlm_system = vlm.WingSystem()
 #System to add rotor to
 mainwingsystem = vlm.WingSystem()
 _fun_fun(X,t) = [0.0, 0.0, -1e-12]
-vlm.setVinf(mainwingsystem, Vinf_fun; keep_Vinf=true)
+vlm.setVinf(mainwingsystem, Vinf_fun)
 
 #make dummy rotor in case there aren't any
 rotors = vlm.Rotor[]
@@ -197,7 +197,7 @@ for i = 1:n_rotors
     this_prop = deepcopy(copy_prop) # Alternates rotation orientation
     this_O = rotorposs[:,i]
     vlm.setcoordsystem(this_prop, this_O, vehicleaxis; user=true)
-    vlm.setVinf(this_prop, Vinf_fun; keep_Vinf=true)
+    vlm.setVinf(this_prop, Vinf_fun)
     # Rotates props to be tip to tip #?what does this do?
     # vlm.rotate(this_prop, (-1)^(!CW_w) * init_ori_prop)
 
@@ -211,7 +211,7 @@ for i = 1:n_rotors
 end
 
 for (i, rotor) in enumerate(rotors)
-    vlm.setVinf(rotor,Vinf_fun; keep_Vinf=true)
+    vlm.setVinf(rotor,Vinf_fun)
     rotor._wingsystem.Vinf = Vinf_fun
     vlm.addwing(mainwingsystem, "rotor$i", rotor)
 end
@@ -219,7 +219,7 @@ end
 rotors[1]._wingsystem.Vinf = Vinf_fun
 println("Sherlock!\n\trotors[1]._wingsystem.Vinf = $(rotors[1]._wingsystem.Vinf)")
 
-vlm.setVinf(mainwingsystem,Vinf_fun; keep_Vinf=true)
+vlm.setVinf(mainwingsystem,Vinf_fun)
 
 # --- Define rotor system --- #
 gt.verbalize("Creating Rotor System...", v_lvl, verbose)
@@ -246,7 +246,7 @@ end
 gt.verbalize("Completed Geometry Generation and Assembly...", v_lvl, verbose)
 
 #Add geometry to vehicle system
-vlm.setVinf(system,Vinf_fun; keep_Vinf=true)
+vlm.setVinf(system,Vinf_fun)
 vehicle = uns.UVLMVehicle(   system;
 # tilting_systems = tilting_systems,
 rotor_systems   = rotor_systems,
