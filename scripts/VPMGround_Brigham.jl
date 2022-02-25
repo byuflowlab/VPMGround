@@ -149,9 +149,9 @@ gt.verbalize("Initializing VLM System...", v_lvl, verbose)
 vlm_system = vlm.WingSystem()
 
 #System to add rotor to
-mainwingsystem = vlm.WingSystem()
+system = vlm.WingSystem()
 Vinf_fun(X,t) = [0.0, 0.0, -1e-12]
-vlm.setVinf(mainwingsystem, Vinf_fun)
+vlm.setVinf(system, Vinf_fun)
 
 #make dummy rotor in case there aren't any
 rotors = vlm.Rotor[]
@@ -213,13 +213,8 @@ end
 for (i, rotor) in enumerate(rotors)
     vlm.setVinf(rotor,Vinf_fun)
     rotor._wingsystem.Vinf = Vinf_fun
-    vlm.addwing(mainwingsystem, "rotor$i", rotor)
+    vlm.addwing(system, "rotor$i", rotor)
 end
-
-rotors[1]._wingsystem.Vinf = Vinf_fun
-println("Sherlock!\n\trotors[1]._wingsystem.Vinf = $(rotors[1]._wingsystem.Vinf)")
-
-vlm.setVinf(mainwingsystem,Vinf_fun)
 
 # --- Define rotor system --- #
 gt.verbalize("Creating Rotor System...", v_lvl, verbose)
@@ -368,7 +363,8 @@ strn = uns.run_simulation(simulation,n_steps;  #10 degrees for 40 rev
                           sigma_vlm_surf=R/numbladeelements*1.3,
                           sigma_rotor_surf=R/numbladeelements*1.3,
                           sigmafactor_vpm=1.3,
-                          sigmafactor_vpmonvlm=1.0
+                          sigmafactor_vpmonvlm=1.0,
+                          vlm_init=true
                           )
                           #this instead of below, find necessary parameters
 # strn = uns.visualize_kinematics(simulation, nsteps, save_path;
