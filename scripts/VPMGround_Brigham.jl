@@ -1,6 +1,6 @@
 ###This is a copy/paste of the usefull parts of windcraft
 #------------ Activate Enviornment -----------------------------------------
-import Pkg 
+import Pkg
 projectpath = joinpath(@__DIR__, "..") * "/"
 Pkg.activate(projectpath)
 # ------------ MODULES ---------------------------------------------------------
@@ -150,7 +150,7 @@ vlm_system = vlm.WingSystem()
 
 #System to add rotor to
 mainwingsystem = vlm.WingSystem()
-_fun_fun(X,t) = [0.0, 0.0, -1e-12]
+Vinf_fun(X,t) = [0.0, 0.0, -1e-12]
 vlm.setVinf(mainwingsystem, Vinf_fun)
 
 #make dummy rotor in case there aren't any
@@ -328,7 +328,7 @@ Vvehicle(t) = zeros(3)
 angleofvehicle(t) = zeros(3)
 
 maneuver = uns.KinematicManeuver(angle, RPM, Vvehicle, angleofvehicle)
-#angle, RPM, velocity(t), 
+#angle, RPM, velocity(t),
 
 revinit         = 0.25              # Part of revolution where to start the simulation
 # tinit           = revinit*t_per_rev
@@ -416,4 +416,3 @@ end
 #     if paraview
 #         run(`paraview --data="$save_path/$strn"`)
 #     end
-
