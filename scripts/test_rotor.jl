@@ -291,8 +291,8 @@ pfield = uns.run_simulation(simulation, nsteps;
                                     Vinf=Vinf,
                                     # SOLVERS OPTIONS
                                     p_per_step=p_per_step,
-                                    # overwrite_sigma=overwrite_sigma,
-                                    # vlm_sigma=vlm_sigma,
+                                    overwrite_sigma=overwrite_sigma,
+                                    vlm_sigma=vlm_sigma,
                                     surf_sigma=surf_sigma,
                                     max_particles=max_particles,
                                     shed_unsteady=shed_unsteady,
